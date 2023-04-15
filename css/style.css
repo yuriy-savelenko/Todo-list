@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }
 
 p,
@@ -15,13 +16,54 @@ a {
   text-decoration: none;
 }
 
+body {
+  background-color: rgba(167, 145, 85, 0.3);
+}
+
 .container {
+  flex-direction: column;
   margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.input {
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.select {
+  margin-top: 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: white;
+}
+
+.btn {
+  cursor: pointer;
+  margin-left: 20px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 0.5rem;
+  background-color: white;
+  border: 1px solid rgba(167, 145, 85, 0.8);
+}
+
+.case_container {
+  margin-top: 10px;
 }
 
 .case_box {
   display: flex;
   align-items: center;
+  margin-bottom: 8px;
 }
 
 .case_checkbox {
@@ -41,16 +83,12 @@ a {
 }
 
 .btn_delete {
+  padding-left: 20px;
+  margin-left: 20px;
   width: 15px;
   height: 15px;
+  border-radius: 50px;
   background-color: red;
-}
-
-.case_list {
-  margin-top: 30px;
-  height: 200px;
-  width: 300px;
-  border: 1px solid red;
 }
 
 .hide {
