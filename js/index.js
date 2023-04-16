@@ -7,13 +7,13 @@ window.addEventListener('DOMContentLoaded', () => {
     if (window.localStorage.length === 0) {
         return;
     }
-    let localResponse = JSON.parse(window.localStorage.getItem('savedCases'));
-    for (let i = 0; i < localResponse.length; i++) {
-        createCase(localResponse[i]);
+    let localStorageResponse = JSON.parse(window.localStorage.getItem('savedCases'));
+    for (let i = 0; i < localStorageResponse.length; i++) {
+        createCase(localStorageResponse[i]);
     }
 })
 
-const createCase = (value) => {
+const createCase = ({ text, check }) => {
     const caseBox = document.createElement('div');
     const btnDelete = document.createElement('div');
     let caseCheckbox = document.createElement('div');
@@ -21,8 +21,12 @@ const createCase = (value) => {
     caseBox.classList.add('case_box');
     btnDelete.classList.add('btn_delete');
     caseCheckbox.classList.add('case_checkbox');
-    caseText.textContent = value;
+    caseText.textContent = text;
     caseText.classList.add('case-find');
+    if (check) {
+        caseCheckbox.classList.add('checked');
+        caseText.classList.add('strike');
+    };
     caseBox.append(caseCheckbox, caseText, btnDelete);
     caseContainer.append(caseBox);
     caseBox.addEventListener('click', (event) => {
@@ -43,7 +47,7 @@ btn.addEventListener('click', (event) => {
     if (input.value === '') {
         return;
     }
-    createCase(input.value);
+    createCase({ text: input.value, check: false });
 })
 
 select.onchange = () => {
@@ -76,13 +80,18 @@ select.onchange = () => {
 }
 
 window.addEventListener('unload', () => {
-    if (window.localStorage.length != 0) {
+    if (window.localStorage.length !== 0) {
         window.localStorage.clear();
     }
     if (document.querySelector('.case-find') !== null) {
-        let localData = [];
+        const localData = [];
         document.querySelectorAll('.case-find').forEach((e) => {
-            localData.push(e.textContent);
+            const obj = {
+                text: e.textContent,
+                check: e.classList.contains('strike'),
+            }
+            localData.push(obj);
+
         })
         window.localStorage.setItem('savedCases', JSON.stringify(localData))
     }

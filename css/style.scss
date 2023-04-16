@@ -36,6 +36,10 @@ body {
     justify-content: center;
 }
 
+.title {
+    padding-bottom: 20px;
+}
+
 .input {
     @include border-padding-otline;
 }
@@ -51,9 +55,11 @@ body {
     @include border-padding-otline;
     border: 1px solid rgba(167, 145, 85, 0.8);
 }
-.case_container{
+
+.case_container {
     margin-top: 10px;
 }
+
 .case_box {
     display: flex;
     align-items: center;
