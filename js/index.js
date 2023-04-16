@@ -3,11 +3,17 @@ const input = document.getElementById('input');
 const caseContainer = document.getElementById('case_container');
 const select = document.getElementById('select');
 
-btn.addEventListener('click', (event) => {
-    event.preventDefault();
-    if (input.value === '') {
+window.addEventListener('DOMContentLoaded', () => {
+    if (window.localStorage.length === 0) {
         return;
     }
+    let localResponse = JSON.parse(window.localStorage.getItem('savedCases'));
+    for (let i = 0; i < localResponse.length; i++) {
+        createCase(localResponse[i]);
+    }
+})
+
+const createCase = (value) => {
     const caseBox = document.createElement('div');
     const btnDelete = document.createElement('div');
     let caseCheckbox = document.createElement('div');
@@ -15,7 +21,7 @@ btn.addEventListener('click', (event) => {
     caseBox.classList.add('case_box');
     btnDelete.classList.add('btn_delete');
     caseCheckbox.classList.add('case_checkbox');
-    caseText.textContent = input.value;
+    caseText.textContent = value;
     caseText.classList.add('case-find');
     caseBox.append(caseCheckbox, caseText, btnDelete);
     caseContainer.append(caseBox);
@@ -30,6 +36,14 @@ btn.addEventListener('click', (event) => {
         btnDelete.parentElement.remove();
     })
 
+}
+
+btn.addEventListener('click', (event) => {
+    event.preventDefault();
+    if (input.value === '') {
+        return;
+    }
+    createCase(input.value);
 })
 
 select.onchange = () => {
@@ -60,3 +74,16 @@ select.onchange = () => {
         })
     }
 }
+
+window.addEventListener('unload', () => {
+    if (window.localStorage.length != 0) {
+        window.localStorage.clear();
+    }
+    if (document.querySelector('.case-find') !== null) {
+        let localData = [];
+        document.querySelectorAll('.case-find').forEach((e) => {
+            localData.push(e.textContent);
+        })
+        window.localStorage.setItem('savedCases', JSON.stringify(localData))
+    }
+})
